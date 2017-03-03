@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="深圳市易图美广告有限公司成立于1999年，是一家专业的户外媒体经营公司，公司在龙华拥有90%的户外广告平台，包括立柱、候车亭、道路灯箱、大型户外广告牌等多种媒体形式.">
+    <meta name="keywords" content="易图美 深圳龙华 公交站台广告 的士站台广告">
+    <title>联系我们</title>
+    <!-- Bootstrap -->
+    <link href="dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        footer{
+            line-height:1.42857143;
+            box-shadow: 1px -1px 5px #888888;
+        }
+    </style>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!--百度地图-->
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=67jMQ5DmYTe1TLMBKFUTcZAR"></script>
+</head>
+<body>
+<!--头部-->
+     <nav class="navbar navbar-default" role="navigation">
+         <div class="container-fluid  container">
+             <div class="navbar-header">
+                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                     <span class="sr-only">Toggle navigation</span>
+                     <span class="icon-bar"></span>
+                     <span class="icon-bar"></span>
+                     <span class="icon-bar"></span>
+                 </button>
+            <!--<a class="navbar-brand" href="#">-->
+                <!--<img src="imges/logo-ytm.gif" alt="logo" style="width: 26%;">-->
+                <!--</a>-->
+        </div>
+             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right btn btn-danger">
+                <li><a href="index.html">公司简介</a></li>
+                <li><a href="service.html">我们的服务</a></li>
+                <li><a href="position.html">广告点位</a></li>
+                <li><a href="#">合作商家</a></li>
+                <li><a href="contact.html">联系我们</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div id="map">
+                <div style="width: 100%; height: 400px;border-radius: 20px;" id="allmap"></div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div style="text-align: center">
+                <img src="imges/logo-ytm.gif" alt="联系我们" style="width: 57%;">
+            </div>
+            <div>
+                <dl>
+                    <dt>
+                        <span class="label label-danger">工作时间</span>
+                    </dt>
+                    <dd>
+                        周一至周六:8:00-18:00
+                    </dd>
+                    <dd>
+                        周日至周日 ：9:00-12:00
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>
+                        <span class="label label-danger">联系方式</span>
+                    </dt>
+                    <dd>
+                        服务热线：0755-28147888（10线） 传真：0755-28102666
+                    </dd>
+                    <dd>
+                        邮箱：1966662788@qq.com
+                    </dd>
+                    <dd>
+                        地址：深圳市龙华新区梅龙大道卫东龙商务大厦B座8楼
+                    </dd>
+                </dl>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--底部-->
+<footer>
+    <div class=" container">
+        <div class=" pull-right">
+            <img src="imges/footer-img.gif" alt="联系方式" style="width: 100%;">
+           </div>
+        </div>
+    </div>
+</footer>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="dist/js/bootstrap.min.js"></script>
+<!--百度地图-->
+<script type="text/javascript">
+    $(function () {
+        ShowMap('114.048802,22.667387', '深圳市易图美广告有限公司', '卫东龙商务大厦', '0755-28147888（10线）', '0755-28102666', '15');
+    })
+    function getInfo(id) {
+        $.ajax({
+            type: "POST",
+            url: "WebUserControl/Contact/GetInfo.ashx",
+            cache: false,
+            async: false,
+            data: { ID: id },
+            success: function (data) {
+                data = eval(data);
+                var length = data.length;
+                if (length > 0) {
+                    ShowMap(data[0]["Image"], data[0]["NewsTitle"], data[0]["Address"], data[0]["Phone"], data[0]["NewsTags"], data[0]["NewsNum"]);
+                }
+            }
+        });
+    }
+    function ShowMap(zuobiao, name, addrsee, phone, chuanzhen, zoom) {
+        var arrzuobiao = zuobiao.split(',');
+        var map = new BMap.Map("allmap");
+        map.centerAndZoom(new BMap.Point(arrzuobiao[0], arrzuobiao[1]), zoom);
+        map.addControl(new BMap.NavigationControl());
+        var marker = new BMap.Marker(new BMap.Point(arrzuobiao[0], arrzuobiao[1]));
+        map.addOverlay(marker);
+        var infoWindow = new BMap.InfoWindow('<p style="color: #bf0008;font-size:14px;">' + name + '</p><p>地址：' + addrsee + '</p><p>电话：' + phone + '</p><p>传真：' + chuanzhen + '</p>');
+        marker.addEventListener("click", function () {
+            this.openInfoWindow(infoWindow);
+        });
+        marker.openInfoWindow(infoWindow);
+    }
+</script>
+</body>
+</html>
