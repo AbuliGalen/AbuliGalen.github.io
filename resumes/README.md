@@ -1,6 +1,5 @@
-HTML Resume Template
+我的个人简历
 --------------------
 
-A simple HTML resume template, well displayed on smart phones and PC under various resolutions. Optimized for printers.
-
-http://myst729.github.io/Resume/
+预览地址
+https://abuligalen.github.io/resumes/#information
